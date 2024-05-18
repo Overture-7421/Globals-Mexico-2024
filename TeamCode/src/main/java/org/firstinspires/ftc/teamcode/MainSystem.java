@@ -1,13 +1,14 @@
 /*
-    __  __                  __                     ______          __
-   / / / /___ ___  ______ _/ /_  __  ___________ _/ ____/___  ____/ /__
-  / /_/ / __ `/ / / / __ `/ __ \/ / / / ___/ __ `/ /   / __ \/ __  / _ \
- / __  / /_/ / /_/ / /_/ / /_/ / /_/ (__  ) /_/ / /___/ /_/ / /_/ /  __/
-/_/ /_/\__,_/\__, /\__,_/_.___/\__,_/____/\__,_/\____/\____/\__,_/\___/
-            /____/
 
-This is the code to control team Overture 23619's robot "Hayabusa".
-Future iterations may change the overall functionality, though it is all used for the 2024 CENTERSTAGE FTC competition by FIRST.
+   ____                  __                     ________      __          __
+  / __ \_   _____  _____/ /___  __________     / ____/ /___  / /_  ____ _/ /____
+ / / / / | / / _ \/ ___/ __/ / / / ___/ _ \   / / __/ / __ \/ __ \/ __ `/ / ___/
+/ /_/ /| |/ /  __/ /  / /_/ /_/ / /  /  __/  / /_/ / / /_/ / /_/ / /_/ / (__  )
+\____/ |___/\___/_/   \__/\__,_/_/   \___/   \____/_/\____/_.___/\__,_/_/____/
+
+
+This is the code to control team Overture 23619's robot "INSERT ROBOT NAME HERE".
+Future iterations may change the overall functionality, though it will be all used for the 2024 FIRST GLOBALS competition.
 All rights reserved. Copyright Overture 23619. Overture holds the right to modify and distribute this code.
 */
 
@@ -48,9 +49,9 @@ public class MainSystem extends LinearOpMode {
         CommandScheduler.getInstance().reset();
 
         Chassis chassis     = new Chassis(hardwareMap);     // Create an instance of Chassis
-        Arm arm            = new Arm(hardwareMap);         // Create an instance of Arm
+        Arm arm            = new Arm(hardwareMap);          // Create an instance of Arm
         Armo armo          = new Armo(hardwareMap);         // Create an instance of Armo
-        Finger finger      = new Finger(hardwareMap);      // Create an instance of Finger
+        Finger finger      = new Finger(hardwareMap);       // Create an instance of Finger
         GamepadEx driverOp  = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
         GamepadEx toolOp    = new GamepadEx(gamepad2);      // Create an instance of OperatorGamepad
 
@@ -58,7 +59,7 @@ public class MainSystem extends LinearOpMode {
         chassis.setDefaultCommand(new MoveChassis(chassis,gamepad1));
 
 
-
+        // -- ARM MOVEMENT (without PID)-- //
         Button operatorButtonY= toolOp.getGamepadButton(GamepadKeys.Button.Y);
         operatorButtonY.whenHeld(new MoveArm(arm, 0.5));
         operatorButtonY.whenReleased(new MoveArm(arm, 0));
@@ -67,10 +68,9 @@ public class MainSystem extends LinearOpMode {
         operatorButtonX.whenHeld(new MoveArm(arm, -0.5));
         operatorButtonX.whenReleased(new MoveArm(arm, 0));
 
-        Button operatorButtonA= toolOp.getGamepadButton(GamepadKeys.Button.A);
-        operatorButtonA.whenHeld(new MoveFinger(finger, 1));
-        operatorButtonA.whenReleased(new MoveFinger (finger, 0));
 
+
+        // -- ARM MOVEMENT (with PID)-- //
         Button operatorDpadUP= toolOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
         operatorDpadUP.whenPressed(new MoveArmo(armo, 0.3));
 
@@ -79,6 +79,12 @@ public class MainSystem extends LinearOpMode {
 
         Button operatorDpadDOWN= toolOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
         operatorDpadDOWN.whenPressed(new MoveArmo(armo, 0.1));
+
+        // -- FINGER MOVEMENT -- //
+        Button operatorButtonA= toolOp.getGamepadButton(GamepadKeys.Button.A);
+        operatorButtonA.whenHeld(new MoveFinger(finger, 1));
+        operatorButtonA.whenReleased(new MoveFinger (finger, 0));
+
 
         waitForStart();
         chassis.resetPose(new Pose2d(0,0, Rotation2d.fromDegrees(0)));
