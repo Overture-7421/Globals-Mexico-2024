@@ -4,7 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+/*
 public class Arm extends SubsystemBase {
 
     private DcMotorEx Arm_Move;
@@ -17,3 +17,4 @@ public class Arm extends SubsystemBase {
     //public void Voltage(double ArmMotorVoltage) { Arm_Move.setPower(ArmMotorVoltage);}
     public void Voltage(double ArmMotorVoltage) { Arm_Move.setPower(ArmMotorVoltage);}
 }
+*/

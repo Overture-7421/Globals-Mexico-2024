@@ -23,7 +23,7 @@ public class Armo extends SubsystemBase {
     public Armo(HardwareMap hardwareMap) {
         Armi = hardwareMap.get(DcMotorEx.class, "Armi");
 
-        ArmoPID = new FRCProfiledPIDController(2, 0.0, 0.0, new FRCTrapezoidProfile.Constraints(2, 2));
+        ArmoPID = new FRCProfiledPIDController(30, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1));
 
         Armi.setDirection(DcMotorEx.Direction.REVERSE);
 

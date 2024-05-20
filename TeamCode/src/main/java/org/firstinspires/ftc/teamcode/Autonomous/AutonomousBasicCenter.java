@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
-
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -9,25 +8,16 @@ import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
 import com.arcrobotics.ftclib.trajectory.TrajectoryGenerator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-//import org.firstinspires.ftc.teamcode.AutonomousCommands.SpitPixels;
-//import org.firstinspires.ftc.teamcode.Commands.RamseteCommand;
-//import org.firstinspires.ftc.teamcode.Commands.TurnToAngle;
-//import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-//import org.firstinspires.ftc.teamcode.Subsystems.Band;
-//import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
-//import org.firstinspires.ftc.teamcode.Subsystems.Claw;
-//import org.firstinspires.ftc.teamcode.Subsystems.Elevator;
-//import org.firstinspires.ftc.teamcode.Subsystems.Intake;
-
+import com.arcrobotics.ftclib.command.WaitCommand;
+import org.firstinspires.ftc.teamcode.Commands.MoveArmo;
 import org.firstinspires.ftc.teamcode.Commands.RamseteCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
-
 import java.util.Arrays;
+import org.firstinspires.ftc.teamcode.Subsystems.Armo;
+
 
 @Autonomous
 public class AutonomousBasicCenter extends LinearOpMode {
-    Chassis chassis;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,21 +25,25 @@ public class AutonomousBasicCenter extends LinearOpMode {
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().reset();
 
-        chassis = new Chassis(hardwareMap);
+        Chassis chassis = new Chassis(hardwareMap);
+        Armo armo = new Armo(hardwareMap);
 
 
-        Trajectory basicCenter = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+        Trajectory Forward = TrajectoryGenerator.generateTrajectory(Arrays.asList(
                         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                        new Pose2d(1, 0, Rotation2d.fromDegrees(0)),
-                        new Pose2d(1, 2, Rotation2d.fromDegrees(90))),
-                new TrajectoryConfig(1, 0.5));
-
+                        new Pose2d(2, 0, Rotation2d.fromDegrees(0))),
+                new TrajectoryConfig(1, 0.8));
 
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
-                new RamseteCommand(chassis, basicCenter));
+                new RamseteCommand(chassis, Forward),
+                new MoveArmo(armo, 0.03),
+                new WaitCommand(3000),
+                new MoveArmo(armo, 0.005)
+        );
+
         waitForStart();
 
-        chassis.resetPose(basicCenter.getInitialPose());
+        chassis.resetPose(Forward.getInitialPose());
 
         CommandScheduler.getInstance().schedule(testCommandGroup);
 
@@ -67,4 +61,4 @@ public class AutonomousBasicCenter extends LinearOpMode {
         }
     }
 }
-//subiendo codigo a
+

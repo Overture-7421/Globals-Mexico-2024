@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Arm;
-
+//import org.firstinspires.ftc.teamcode.Subsystems.Arm;
+/*
 public class MoveArm extends CommandBase {
 
     private Arm arm;
@@ -21,3 +21,4 @@ public class MoveArm extends CommandBase {
         arm.Voltage(voltage);
     }
 }
+*/
