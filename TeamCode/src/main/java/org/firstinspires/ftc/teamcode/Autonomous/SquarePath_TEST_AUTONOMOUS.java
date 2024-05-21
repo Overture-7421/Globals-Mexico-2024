@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.arcrobotics.ftclib.trajectory.Trajectory;
@@ -10,13 +9,12 @@ import com.arcrobotics.ftclib.trajectory.TrajectoryGenerator;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Commands.RamseteCommand;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
 
 import java.util.Arrays;
 
 @Autonomous
-public class SquareRoot extends LinearOpMode {
+public class SquarePath_TEST_AUTONOMOUS extends LinearOpMode {
 
     Chassis chassis;
 
