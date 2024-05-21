@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -18,6 +19,9 @@ public class Armo extends SubsystemBase {
 
     public static final double Arm_Gear_Ratio = 0.10868277;
 
+    public static double ArmiHeight;
+    public static double goalHeight;
+
     private int ArmoMotorOffset = 0;
 
     public Armo(HardwareMap hardwareMap) {
@@ -35,6 +39,8 @@ public class Armo extends SubsystemBase {
 
         ArmoPID.reset(getHeight());
         ArmoPID.setGoal(getHeight());
+
+
     }
 
     public void resetZero() {
