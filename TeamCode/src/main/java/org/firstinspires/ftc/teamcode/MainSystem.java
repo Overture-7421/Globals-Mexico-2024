@@ -124,7 +124,7 @@ public class MainSystem extends LinearOpMode {
             //Esto ni idea
             telemetry.addData("ArmiHeight", armo.ArmigetCurrentHeight());
 
-            //Con esperanzas funciona
+            //No funciona verdaderamente
             telemetry.addData("Armi Target height", armo.goalHeight);
             telemetry.addData("ArmiCurrentPos", armo.ArmigetCurrentHeight);
 
