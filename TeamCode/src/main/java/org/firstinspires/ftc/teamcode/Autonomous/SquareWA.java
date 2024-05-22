@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Armo;
 
 
 @Autonomous
-public class AutonomousBasicCenter extends LinearOpMode {
+public class SquareWA extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
