@@ -12,7 +12,7 @@ public class DropPiece extends SequentialCommandGroup {
     public DropPiece(Armo armo, Finger finger) {
         addCommands(
                 new MoveFinger(finger, 0),
-                new MoveArmo(armo, 0.07),
+                new MoveArmo(armo, 0.16),
                 new WaitCommand(1000),
                 new MoveFinger(finger, 0.30),
                 new WaitCommand(1000),

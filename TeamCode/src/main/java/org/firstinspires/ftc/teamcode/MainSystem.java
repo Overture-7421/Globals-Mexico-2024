@@ -16,9 +16,7 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -26,18 +24,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 // Commands Import
 
-import org.firstinspires.ftc.teamcode.AutonomousCommands.DropPiece;
-import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
-import org.firstinspires.ftc.teamcode.Commands.MoveArmo;
 import org.firstinspires.ftc.teamcode.Commands.MoveChassis;
 
 
 // Subsystems Import
 
-import org.firstinspires.ftc.teamcode.Commands.MoveFinger;
-import org.firstinspires.ftc.teamcode.Subsystems.Armo;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
-import org.firstinspires.ftc.teamcode.Subsystems.Finger;
 
 
 @Config
@@ -51,10 +43,10 @@ public class MainSystem extends LinearOpMode {
         CommandScheduler.getInstance().reset();
 
         Chassis chassis     = new Chassis(hardwareMap);     // Create an instance of Chassis
-        Armo armo          = new Armo(hardwareMap);         // Create an instance of Armo
+        //Armo armo          = new Armo(hardwareMap);         // Create an instance of Armo
         //Shooter Shoot_Servo = new Shooter(hardwareMap);
         //Claw claw          = new Claw(hardwareMap);
-        Finger finger      = new Finger(hardwareMap);       // Create an instance of Finger
+        //Finger finger      = new Finger(hardwareMap);       // Create an instance of Finger
         //Intake intake      = new Intake (hardwareMap);
         GamepadEx driverOp  = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
         //GamepadEx toolOp    = new GamepadEx(gamepad2);      // Create an instance of OperatorGamepad
@@ -75,12 +67,12 @@ public class MainSystem extends LinearOpMode {
   // -----------------------------------------------------------------------------------------
 
         // -- ARM MOVEMENT (with PID)-- //
-
+/*
         Button driverDpadRight= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
-        driverDpadRight.whenPressed(new MoveArmo(armo, 0.075));
+        driverDpadRight.whenPressed(new MoveArmo(armo, 0.16));
 
         Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        driverDpadDOWN.whenPressed(new MoveArmo(armo, 0.02));
+        driverDpadDOWN.whenPressed(new MoveArmo(armo, 0.04));
 
         Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
         driverDpadLeft.whenPressed(new MoveArmo(armo, 0.007));
@@ -94,13 +86,13 @@ public class MainSystem extends LinearOpMode {
         driverButtonB.whenPressed(new DropPiece(armo, finger));
 
         Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
-        driverButtonX.whenPressed(new MoveFinger(finger, 0));
+        driverButtonX.whenPressed(new RestPosition(armo, finger));
 
         Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
         driverButtonA.whenPressed(new MoveFinger(finger, 0.30));
 
 
-
+*/
 
         //Button driverButtonY= toolOp.getGamepadButton(GamepadKeys.Button.Y);
         //driverButtonY.whenPressed(new MoveShooter(Shoot_Servo, 1));
@@ -126,18 +118,20 @@ public class MainSystem extends LinearOpMode {
             Pose2d pose = chassis.getPose();
 
             // -- ODOMETRY TELEMETRY -- //
+
             telemetry.addData("X", pose.getX());
             telemetry.addData("Y", pose.getY());
             telemetry.addData("Heading", pose.getRotation().getDegrees());
-
             telemetry.addData("RightDistance", chassis.rightDistance());
             telemetry.addData("LeftDistance", chassis.leftDistance());
 
 
-            telemetry.addData("ArmiHeight", armo.ArmigetCurrentHeight());
+/*
+            telemetry.addData("Armi1Height", armo.ArmoMotor1getCurrentHeight());
+            telemetry.addData("Armi2Height", armo.ArmoMotor2getCurrentHeight());
 
 
-
+*/
             // -- UPDATE TELEMETRY -- //
             telemetry.update();
         }
