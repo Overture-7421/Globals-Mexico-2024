@@ -13,6 +13,8 @@ All rights reserved. Copyright Overture 23619. Overture holds the right to modif
 */
 
 package org.firstinspires.ftc.teamcode;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
@@ -25,11 +27,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 // Commands Import
 
 import org.firstinspires.ftc.teamcode.AutonomousCommands.DropPiece;
-import org.firstinspires.ftc.teamcode.AutonomousCommands.PickUp;
+import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
 import org.firstinspires.ftc.teamcode.Commands.MoveArmo;
 import org.firstinspires.ftc.teamcode.Commands.MoveChassis;
-import org.firstinspires.ftc.teamcode.Commands.MoveIntake;
-import org.firstinspires.ftc.teamcode.Commands.MoveClaw;
 
 
 // Subsystems Import
@@ -37,11 +37,10 @@ import org.firstinspires.ftc.teamcode.Commands.MoveClaw;
 import org.firstinspires.ftc.teamcode.Commands.MoveFinger;
 import org.firstinspires.ftc.teamcode.Subsystems.Armo;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
-import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.Subsystems.Finger;
-import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 
 
+@Config
 @TeleOp
 public class MainSystem extends LinearOpMode {
 
@@ -53,11 +52,13 @@ public class MainSystem extends LinearOpMode {
 
         Chassis chassis     = new Chassis(hardwareMap);     // Create an instance of Chassis
         Armo armo          = new Armo(hardwareMap);         // Create an instance of Armo
+        //Shooter Shoot_Servo = new Shooter(hardwareMap);
         //Claw claw          = new Claw(hardwareMap);
-        //Finger finger      = new Finger(hardwareMap);       // Create an instance of Finger
+        Finger finger      = new Finger(hardwareMap);       // Create an instance of Finger
         //Intake intake      = new Intake (hardwareMap);
         GamepadEx driverOp  = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
-        GamepadEx toolOp    = new GamepadEx(gamepad2);      // Create an instance of OperatorGamepad
+        //GamepadEx toolOp    = new GamepadEx(gamepad2);      // Create an instance of OperatorGamepad
+
 
 
 
@@ -75,30 +76,47 @@ public class MainSystem extends LinearOpMode {
 
         // -- ARM MOVEMENT (with PID)-- //
 
-        Button operatorDpadRight= toolOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
-        operatorDpadRight.whenPressed(new MoveArmo(armo, 0.075));
+        Button driverDpadRight= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
+        driverDpadRight.whenPressed(new MoveArmo(armo, 0.075));
 
-        Button operatorDpadDOWN= toolOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        operatorDpadDOWN.whenPressed(new MoveArmo(armo, 0.02));
+        Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
+        driverDpadDOWN.whenPressed(new MoveArmo(armo, 0.02));
 
-        Button operatorDpadLeft= toolOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
-        operatorDpadLeft.whenPressed(new MoveArmo(armo, 0.007));
+        Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
+        driverDpadLeft.whenPressed(new MoveArmo(armo, 0.007));
+
+           // -- FINGER MOVEMENT -- //
+
+        Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
+        driverButtonY.whenPressed(new GoDown(armo, finger));
+
+        Button driverButtonB= driverOp.getGamepadButton(GamepadKeys.Button.B);
+        driverButtonB.whenPressed(new DropPiece(armo, finger));
+
+        Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
+        driverButtonX.whenPressed(new MoveFinger(finger, 0));
+
+        Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
+        driverButtonA.whenPressed(new MoveFinger(finger, 0.30));
+
+
+
+
+        //Button driverButtonY= toolOp.getGamepadButton(GamepadKeys.Button.Y);
+        //driverButtonY.whenPressed(new MoveShooter(Shoot_Servo, 1));
+
 
 /*
         // -- Claw MOVEMENT -- //
-        Button operatorRightBumper= toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
+        Button driverRightBumper= toolOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
         operatorRightBumper.whenPressed(new MoveClaw(claw,-1));
 
-        Button operatorLeftBumper= toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
+        Button driverLeftBumper= toolOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
         operatorLeftBumper.whenPressed(new MoveClaw(claw,0.56));
 
+*/      FtcDashboard dashboard = FtcDashboard.getInstance();
+        telemetry = dashboard.getTelemetry();
 
-      /*  // -- FINGER MOVEMENT -- //
-        Button operatorButtonA= toolOp.getGamepadButton(GamepadKeys.Button.A);
-        operatorButtonA.whenPressed(new PickUp(armo, finger));
-
-        Button operatorButtonB= toolOp.getGamepadButton(GamepadKeys.Button.B);
-        operatorButtonB.whenPressed(new DropPiece(armo, finger));*/
 
         waitForStart();
         chassis.resetPose(new Pose2d(0,0, Rotation2d.fromDegrees(0)));
@@ -117,6 +135,7 @@ public class MainSystem extends LinearOpMode {
 
 
             telemetry.addData("ArmiHeight", armo.ArmigetCurrentHeight());
+
 
 
             // -- UPDATE TELEMETRY -- //
