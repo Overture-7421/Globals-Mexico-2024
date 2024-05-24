@@ -19,7 +19,8 @@ public class Chassis extends SubsystemBase {
     private DcMotorEx left_Drive;
 
     // Cm per tick constant
-    private final double M_PER_TICK = 1.0  / 54000.0 * 9.0 * Math.PI;
+    //private final double M_PER_TICK = 1.0  / 54000.0 * 9.0 * Math.PI; (20:1)
+    private final double M_PER_TICK = 1.0 / (54000.0 / 20.0 * 15.0) * 9.0 * Math.PI; //(15:1)
     static final double TRACKWIDTH = 1;
 
     private DifferentialDriveOdometry diffOdom;
