@@ -8,19 +8,29 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Claw extends SubsystemBase {
 
     // Motor Declaration
-    private ServoEx grab_RightServo; // Declare left claw servo
-    private ServoEx grab_LeftServo; //Declare right claw servo
+    private ServoEx rightServo; // Declare left claw servo
+    private ServoEx leftServo; //Declare right claw servo
 
     public Claw (HardwareMap hardwareMap) {
         //Servos IDs
-        grab_RightServo = new SimpleServo(hardwareMap, "grab_RightServo", 0, 0.5);
-        grab_LeftServo = new SimpleServo(hardwareMap, "grab_LeftServo", 0, 0.5);
-        grab_LeftServo.setInverted(true);
+        rightServo = new SimpleServo(hardwareMap, "grab_RightServo", 0, 180);
+        leftServo = new SimpleServo(hardwareMap, "grab_LeftServo", 0, 180);
+
+        leftServo.setInverted(true);
+        //grab_RightServo.setInverted(true);
     }
 
-    public void ClawPosition(double ClawMotorPosition) {
-        grab_RightServo.setPosition(ClawMotorPosition);
-        grab_LeftServo.setPosition(ClawMotorPosition);
+    public double getRightPosition(){
+        return rightServo.getPosition();
+    }
+
+    public double getLeftPosition(){
+        return leftServo.getPosition();
+    }
+
+    public void setPosition(double clawPosition) {
+        rightServo.setPosition(clawPosition);
+        leftServo.setPosition(clawPosition);
 
     }
 

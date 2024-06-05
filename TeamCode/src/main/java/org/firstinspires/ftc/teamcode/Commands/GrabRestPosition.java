@@ -1,16 +1,19 @@
 package org.firstinspires.ftc.teamcode.Commands;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
-import org.firstinspires.ftc.teamcode.Subsystems.Armo;
-import org.firstinspires.ftc.teamcode.Subsystems.Finger;
+import org.firstinspires.ftc.teamcode.Subsystems.DoubleArm;
+import org.firstinspires.ftc.teamcode.Subsystems.Claw;
+
 
 
 public class GrabRestPosition extends SequentialCommandGroup {
 
-    public GrabRestPosition(Armo armo, Finger finger) {
+    public GrabRestPosition(DoubleArm armo, Claw claw) {
         addCommands(
-                new MoveFinger(finger, 0),
-                new MoveArmo(armo, 0.04)
+                new MoveClaw(claw, 0),
+                new WaitCommand(1000),
+                new MoveDoubleArm(armo, -77, 150)
 
         );
     }

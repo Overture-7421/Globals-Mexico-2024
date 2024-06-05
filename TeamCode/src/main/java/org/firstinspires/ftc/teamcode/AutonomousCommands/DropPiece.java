@@ -1,22 +1,22 @@
 package org.firstinspires.ftc.teamcode.AutonomousCommands;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
-import org.firstinspires.ftc.teamcode.Commands.MoveArmo;
-import org.firstinspires.ftc.teamcode.Commands.MoveFinger;
-import org.firstinspires.ftc.teamcode.Subsystems.Armo;
-import org.firstinspires.ftc.teamcode.Subsystems.Finger;
+
+import org.firstinspires.ftc.teamcode.Commands.MoveClaw;
+import org.firstinspires.ftc.teamcode.Subsystems.DoubleArm;
+import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 
 
 public class DropPiece extends SequentialCommandGroup {
 
-    public DropPiece(Armo armo, Finger finger) {
+    public DropPiece(DoubleArm armo, Claw claw) {
         addCommands(
-                new MoveFinger(finger, 0),
-                new MoveArmo(armo, 0.16),
+                new MoveClaw(claw, 0),
+                //new MoveDoubleArm(armo, 0.16, 0),
                 new WaitCommand(1000),
-                new MoveFinger(finger, 0.30),
-                new WaitCommand(1000),
-                new MoveArmo(armo, 0.03)
+                new MoveClaw(claw, 0.20),
+                new WaitCommand(1000)
+                //new MoveDoubleArm(armo, 0.03,0)
 
         );
     }

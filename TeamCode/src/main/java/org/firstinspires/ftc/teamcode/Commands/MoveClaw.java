@@ -8,26 +8,25 @@ import java.util.concurrent.TimeUnit;
 
 public class MoveClaw extends CommandBase {
     private Claw claw;
-    private double ClawMotorPosition;
-    private Timing.Timer timer;
+    private double clawPosition;
 
-    public MoveClaw(Claw subsystem, double ClawMotorPosition) {
-        this.ClawMotorPosition = ClawMotorPosition;
+    public MoveClaw(Claw subsystem, double clawPosition) {
+        this.clawPosition = clawPosition;
         claw = subsystem;
-        timer = new Timing.Timer(1, TimeUnit.SECONDS);
         addRequirements(subsystem);
     }
 
     @Override
     public void initialize() {
-        claw.ClawPosition(ClawMotorPosition);
-        timer.start();
+        claw.setPosition(clawPosition);
     }
 
 
     @Override
     public boolean isFinished() {
-        return timer.done();
+        double leftPosition = claw.getLeftPosition();
+        double rightPosition = claw.getRightPosition();
+        return (Math.abs(clawPosition - leftPosition) < 0.01) && (Math.abs(clawPosition - rightPosition) < 0.01);
     }
 }
 
