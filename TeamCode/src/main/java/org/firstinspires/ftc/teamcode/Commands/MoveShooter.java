@@ -11,23 +11,21 @@ import java.util.concurrent.TimeUnit;
 public class MoveShooter extends CommandBase {
     private Shooter shooter;
     private double position;
-    private Timing.Timer timer;
 
-    public MoveShooter(Shooter subsystem, double position) {
-        this.position = position;
+    public MoveShooter(Shooter subsystem, double shooterPosition) {
+        this.position = shooterPosition;
         shooter = subsystem;
-        timer = new Timing.Timer(1, TimeUnit.SECONDS);
         addRequirements(subsystem);
     }
 
     @Override
     public void initialize(){
-        shooter.Position(position);
-        timer.start();
+        shooter.setPosition(position);
     }
 
     @Override
     public boolean isFinished() {
-        return timer.done();
+        double shooterPosition = shooter.getPosition();
+        return (Math.abs(position - shooterPosition) < 0.01);
     }
 }

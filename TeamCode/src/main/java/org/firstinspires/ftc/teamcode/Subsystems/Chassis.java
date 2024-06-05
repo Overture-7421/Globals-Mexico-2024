@@ -15,30 +15,26 @@ import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
 public class Chassis extends SubsystemBase {
     // Motors Declaration
-    private DcMotorEx right_Drive;
-    private DcMotorEx left_Drive;
+    private DcMotorEx rightDrive;
+    private DcMotorEx leftDrive;
 
-    // Cm per tick constant
-    private final double M_PER_TICK = 1.0  / 54000.0 * 9.0 * Math.PI;
-    static final double TRACKWIDTH = 1;
+    private final double M_PER_TICK = (28); //Motor (Doesn't change)
+    static final double TRACKWIDTH = 0.0891286; // Depends on the wheels
+    static final double GEAR_REDUCTION = 15; // Depends on the motor configuration
 
     private DifferentialDriveOdometry diffOdom;
 
     private IMU imu;
-    // Odometry variables
-    //private DifferentialDriveOdometry odometry;
-
     private int leftOffset = 0, rightOffset = 0;
-
 
     public Chassis(HardwareMap hardwareMap) {
         // Motor ID
-        right_Drive = (DcMotorEx) hardwareMap.get(DcMotor.class, "right_Drive");
-        left_Drive = (DcMotorEx) hardwareMap.get(DcMotor.class, "left_Drive");
+        rightDrive = (DcMotorEx) hardwareMap.get(DcMotor.class, "right_Drive");
+        leftDrive = (DcMotorEx) hardwareMap.get(DcMotor.class, "left_Drive");
 
         // Invert one motor
-        right_Drive.setDirection(DcMotor.Direction.REVERSE);
-        left_Drive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
 
         // Odometry initialization
         diffOdom = new DifferentialDriveOdometry(new Rotation2d());
@@ -46,34 +42,34 @@ public class Chassis extends SubsystemBase {
 
 
         IMU.Parameters imuParameters = new IMU.Parameters(
-                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)
+                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)
         );
 
         imu.initialize(imuParameters);
-
         imu.resetYaw();
 
     }
 
     // Set Speed Function
     public void setSpeed(double linearSpeed, double angularSpeed){
-        right_Drive.setPower(linearSpeed + angularSpeed);
-        left_Drive.setPower(linearSpeed - angularSpeed);
+        rightDrive.setPower(linearSpeed + angularSpeed);
+        leftDrive.setPower(linearSpeed - angularSpeed);
     }
 
     // Get Right Distance (Position)
     public double rightDistance(){
-        return (right_Drive.getCurrentPosition() - rightOffset) * M_PER_TICK;
+        return ((rightDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
     }
 
     // Get Left Distance (Position)
     public double leftDistance(){
-        return (left_Drive.getCurrentPosition() - leftOffset) * M_PER_TICK;
+        return ((leftDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
     }
 
     public void resetPose(Pose2d pose) {
-        leftOffset = left_Drive.getCurrentPosition();
-        rightOffset = right_Drive.getCurrentPosition();
+        leftOffset = leftDrive.getCurrentPosition();
+        rightOffset = rightDrive.getCurrentPosition();
         diffOdom.resetPosition(pose, getIMUHeading());
     }
 

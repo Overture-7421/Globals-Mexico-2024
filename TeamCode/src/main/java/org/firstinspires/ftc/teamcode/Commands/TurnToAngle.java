@@ -17,13 +17,13 @@ public class TurnToAngle extends CommandBase {
         this.chassis = chassis;
         this.targetHeading = targetHeading;
 
-        pidController = new FRCProfiledPIDController(0.1, 0.0, 0, new FRCTrapezoidProfile.Constraints(520, 300));
+        pidController = new FRCProfiledPIDController(0.098, 0.0, 0, new FRCTrapezoidProfile.Constraints(500, 250));
         addRequirements(chassis);
     }
 
     @Override
     public void initialize() {
-        pidController.setTolerance(3);
+        pidController.setTolerance(0);
         pidController.enableContinuousInput(-180.0, 180.0);
 
         double targetDegrees = targetHeading.getDegrees();

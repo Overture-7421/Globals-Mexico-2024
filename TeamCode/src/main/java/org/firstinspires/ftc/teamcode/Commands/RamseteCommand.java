@@ -20,7 +20,7 @@ public class RamseteCommand extends CommandBase {
         this.chassis = chassis;
         this.trajectory = trajectory;
 
-        controller = new RamseteController(2.0, 0.7);
+        controller = new RamseteController(10.0, 0.70);
         timer = new Timer((long) trajectory.getTotalTimeSeconds() * 1000, TimeUnit.MILLISECONDS);
         addRequirements(chassis);
     }
