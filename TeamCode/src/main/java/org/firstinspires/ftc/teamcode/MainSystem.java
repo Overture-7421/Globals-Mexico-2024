@@ -35,9 +35,11 @@ import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
 
 // Subsystems Import
 
+import org.firstinspires.ftc.teamcode.Commands.MoveShooter;
 import org.firstinspires.ftc.teamcode.Subsystems.DoubleArm;
 import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
+import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 
 
 @TeleOp
@@ -51,11 +53,10 @@ public class MainSystem extends LinearOpMode {
 
         Chassis chassis         = new Chassis(hardwareMap);     // Create an instance of Chassis
         DoubleArm armo          = new DoubleArm(hardwareMap);         // Create an instance of Armo
-        //ForeArm foreArm       = new ForeArm(hardwareMap);
-        //Shooter Shoot_Servo   = new Shooter(hardwareMap);
+        Shooter Shoot_Servo   = new Shooter(hardwareMap);
         Claw claw               = new Claw(hardwareMap);
         GamepadEx driverOp      = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
-        //GamepadEx toolOp      = new GamepadEx(gamepad2);      // Create an instance of OperatorGamepad
+
 
 
 
@@ -63,43 +64,47 @@ public class MainSystem extends LinearOpMode {
         // -- CHASSIS MOVEMENT -- //
         chassis.setDefaultCommand(new MoveChassis(chassis,gamepad1));
 
-        /*Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
-        driverRightBumper.whenPressed(new MoveDoubleArm(armo, 150, 150));
-*/
+        Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
+        driverRightBumper.whileHeld(new MoveDoubleArm(armo, -70,150));
+
+
   // -----------------------------------------------------------------------------------------
 
         // -- ARM MOVEMENT (with PID)-- //
 
-        Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
-        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, 2, 0)); //Close
 
         Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo, -40, 88)); //Open */
-
-        Button driverDpadUP= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
-        driverDpadUP.whenPressed(new MoveDoubleArm(armo,  35, 55)); //Up
+        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo, -70, 89.5)); //Down LISTOOOOOOOO
 
         Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
-        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -40, 175)); //Rest position
+        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -40, 63)); //UP
 
         Button driverLeftBumper= driverOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
-        driverLeftBumper.whenPressed(new MoveDoubleArm(armo, 2, -55));
+        driverLeftBumper.whenPressed(new MoveDoubleArm(armo, 90, 150)); //Cone
+
+        Button driverDpadUP= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
+        driverDpadUP.whenPressed(new MoveDoubleArm(armo,  -40, 85)); //Climb
+
+        Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
+        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -70,150)); //Close
 
 
 
            // -- FINGER MOVEMENT -- //
 
-        Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
-        driverButtonA.whenPressed(new GoDown(armo, claw)); //Ready
+        Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
+        driverButtonY.whenPressed(new MoveDoubleArm(armo, 90,85)); //Ready
+
+        Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
+        driverButtonX.whenPressed(new MoveClaw(claw, 0.9)); //OpenClaw
 
         Button driverButtonB= driverOp.getGamepadButton(GamepadKeys.Button.B);
-        driverButtonB.whenPressed(new MoveClaw(claw, 0.5)); //OpenClaw
+        driverButtonB.whenPressed(new MoveClaw(claw, 0.5));
 
-        Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
-        driverButtonY.whenPressed(new MoveClaw(claw, 0.1)); //Close, and rest position
+        Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
+        driverButtonA.whenPressed(new MoveDoubleArm(armo, -30,75)); //Close, and rest position
 
-        /*Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
-        driverButtonX.whenPressed(new MoveClaw(claw, 0));*/
+
 
 
         waitForStart();
@@ -118,8 +123,6 @@ public class MainSystem extends LinearOpMode {
             telemetry.addData("LeftDistance", chassis.leftDistance());
             telemetry.addData("ServoLeft", claw.getLeftPosition());
             telemetry.addData("ServoRight", claw.getRightPosition());
-
-
             telemetry.addData("UpperPosition", armo.getUpperPosition() * 360);
             telemetry.addData("LowerPosition", armo.getLowerPosition() * 360);
 

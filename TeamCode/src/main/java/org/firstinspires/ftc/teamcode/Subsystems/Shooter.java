@@ -11,6 +11,8 @@ public class Shooter extends SubsystemBase {
 
     public Shooter (HardwareMap hardwareMap){
         shooter = new SimpleServo(hardwareMap, "Shoot_Servo", 0, 1);
+
+        //shooter.setInverted(true);
     }
 
     public double getPosition(){

@@ -11,7 +11,7 @@ public class GoDown extends ParallelRaceGroup {
 
     public GoDown(DoubleArm armo,  Claw claw) {
         addCommands(
-                new MoveDoubleArm(armo, -40, 73),
+                new MoveDoubleArm(armo, -40, 40),
                 new MoveClaw(claw, 0.20)
         );
     }

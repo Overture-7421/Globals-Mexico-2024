@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
 
 
 @Autonomous
-public class Red extends LinearOpMode {
+public class EmergencyBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,28 +38,13 @@ public class Red extends LinearOpMode {
 
         Trajectory Forward = TrajectoryGenerator.generateTrajectory(Arrays.asList(
                         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                        new Pose2d(0.8, 0, Rotation2d.fromDegrees(0))),
-                new TrajectoryConfig(1, 0.5));
-
-        Trajectory Park = TrajectoryGenerator.generateTrajectory(Arrays.asList(
-                        new Pose2d(0.8, 0, Rotation2d.fromDegrees(-90)),
-                        new Pose2d(0.55, -1.3, Rotation2d.fromDegrees(-90))),
+                        new Pose2d(1.3, 0, Rotation2d.fromDegrees(0))),
                 new TrajectoryConfig(1, 0.5));
 
 
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
                 new MoveClaw(claw, 0.9),
-                new MoveDoubleArm(armo, -15,80), //posición de Disco
-                new RamseteCommand(chassis, Forward),
-                new WaitCommand(1000),
-                new MoveClaw(claw, 0.5),
-                new MoveDoubleArm(armo, -15,160),
-                new WaitCommand(1000),
-                new MoveClaw(claw, 0.9),
-                new MoveDoubleArm(armo, -70, 91.5), //Posición de atrás
-                new TurnToAngle(chassis, Rotation2d.fromDegrees(-90)),
-                new RamseteCommand(chassis, Park)
-
+                new RamseteCommand(chassis, Forward)
         );
 
         waitForStart();

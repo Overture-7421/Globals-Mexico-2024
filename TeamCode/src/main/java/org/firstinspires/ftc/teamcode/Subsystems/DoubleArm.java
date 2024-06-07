@@ -18,21 +18,21 @@ public class DoubleArm extends SubsystemBase {
 
     public static final double COUNTS_PER_REV = 288;
 
-    public static final double LOWER_GEAR_RATIO = 0.24;
+    public static final double LOWER_GEAR_RATIO = 0.12;
     public static final double UPPER_GEAR_RATIO = 1;
 
-    private double lowerOffset = 49 ;
+    private double lowerOffset = 78 ;
 
-    private double upperOffset = -187;
+    private double upperOffset = -168;
 
     public DoubleArm(HardwareMap hardwareMap) {
         lowerMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor1");
         upperMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor3");
 
-        lowerPID = new FRCProfiledPIDController(105, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1.5));
+        lowerPID = new FRCProfiledPIDController(57, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1.5));
         upperPID = new FRCProfiledPIDController(30, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 3));
 
-        lowerMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        //lowerMotor.setDirection(DcMotorEx.Direction.REVERSE);
         //upperMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         lowerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

@@ -20,7 +20,7 @@ public class Chassis extends SubsystemBase {
 
     private final double M_PER_TICK = (28); //Motor (Doesn't change)
     static final double TRACKWIDTH = 0.0891286; // Depends on the wheels
-    static final double GEAR_REDUCTION = 15; // Depends on the motor configuration
+    static final double GEAR_REDUCTION = 12; // Depends on the motor configuration
 
     private DifferentialDriveOdometry diffOdom;
 
@@ -53,8 +53,8 @@ public class Chassis extends SubsystemBase {
 
     // Set Speed Function
     public void setSpeed(double linearSpeed, double angularSpeed){
-        rightDrive.setPower(linearSpeed + angularSpeed);
-        leftDrive.setPower(linearSpeed - angularSpeed);
+        rightDrive.setPower(linearSpeed - angularSpeed);
+        leftDrive.setPower(linearSpeed + angularSpeed);
     }
 
     // Get Right Distance (Position)
