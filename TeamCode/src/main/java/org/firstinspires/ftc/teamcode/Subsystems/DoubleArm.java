@@ -18,7 +18,7 @@ public class DoubleArm extends SubsystemBase {
 
     public static final double COUNTS_PER_REV = 288;
 
-    public static final double LOWER_GEAR_RATIO = 0.12;
+    public static final double LOWER_GEAR_RATIO = 0.24;
     public static final double UPPER_GEAR_RATIO = 1;
 
     private double lowerOffset = 78 ;
@@ -29,8 +29,8 @@ public class DoubleArm extends SubsystemBase {
         lowerMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor1");
         upperMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor3");
 
-        lowerPID = new FRCProfiledPIDController(57, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1.5));
-        upperPID = new FRCProfiledPIDController(30, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 3));
+        lowerPID = new FRCProfiledPIDController(77, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 0.5));
+        upperPID = new FRCProfiledPIDController(20, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1.5));
 
         //lowerMotor.setDirection(DcMotorEx.Direction.REVERSE);
         //upperMotor.setDirection(DcMotorEx.Direction.REVERSE);
@@ -57,7 +57,6 @@ public class DoubleArm extends SubsystemBase {
     public double getLowerPosition() {
         double currentTicks = lowerMotor.getCurrentPosition();
         double currentPosition = (currentTicks / COUNTS_PER_REV * LOWER_GEAR_RATIO) - (lowerOffset/360);;
-
         return currentPosition;
     }
 

@@ -17,7 +17,7 @@ public class TurnToAngle extends CommandBase {
         this.chassis = chassis;
         this.targetHeading = targetHeading;
 
-        pidController = new FRCProfiledPIDController(0.098, 0.0, 0, new FRCTrapezoidProfile.Constraints(500, 250));
+        pidController = new FRCProfiledPIDController(0.099, 0.0, 0, new FRCTrapezoidProfile.Constraints(500, 250));
         addRequirements(chassis);
     }
 

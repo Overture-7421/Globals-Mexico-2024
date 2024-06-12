@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.arcrobotics.ftclib.geometry.Pose2d;
@@ -19,11 +18,10 @@ import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 import java.util.Arrays;
 import org.firstinspires.ftc.teamcode.Subsystems.DoubleArm;
 import org.firstinspires.ftc.teamcode.Commands.TurnToAngle;
-import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
 
 
 @Autonomous
-public class Blue extends LinearOpMode {
+public class BlueLarge extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,27 +36,38 @@ public class Blue extends LinearOpMode {
 
         Trajectory Forward = TrajectoryGenerator.generateTrajectory(Arrays.asList(
                         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                        new Pose2d(0.8, 0, Rotation2d.fromDegrees(0))),
-                new TrajectoryConfig(1, 0.4));
+                        new Pose2d(2.73, 0, Rotation2d.fromDegrees(0))),
+                new TrajectoryConfig(0.5, 0.2));
 
         Trajectory Park = TrajectoryGenerator.generateTrajectory(Arrays.asList(
-                        new Pose2d(0.8, 0, Rotation2d.fromDegrees(90)),
-                        new Pose2d(0.73, 1.3, Rotation2d.fromDegrees(90))),
+                        new Pose2d(2.73, 0, Rotation2d.fromDegrees(95)),
+                        new Pose2d(2.73, 1.35, Rotation2d.fromDegrees(91))),
                 new TrajectoryConfig(1, 0.4));
+
+        Trajectory Back = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                        new Pose2d(2.73, 0, Rotation2d.fromDegrees(95)),
+                        new Pose2d(2.73, 1.20, Rotation2d.fromDegrees(91))),
+                new TrajectoryConfig(0.5, 0.2));
+
 
 
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
                 new MoveClaw(claw, 0.9),
-                new MoveDoubleArm(armo, -15,80), //posición de Disco
                 new RamseteCommand(chassis, Forward),
+                new TurnToAngle(chassis, Rotation2d.fromDegrees(95)),
+                new MoveDoubleArm(armo, 10,20), //To be determined
+                new RamseteCommand(chassis, Park),
+                new MoveDoubleArm(armo, -10,10),
                 new WaitCommand(1000),
                 new MoveClaw(claw, 0.5),
-                new MoveDoubleArm(armo, -15,150),
                 new WaitCommand(1000),
+                new MoveDoubleArm(armo, -10,25),
                 new MoveClaw(claw, 0.9),
-                new MoveDoubleArm(armo, -70, 91.5), //Posición de atrás
-                new TurnToAngle(chassis, Rotation2d.fromDegrees(90)),
-                new RamseteCommand(chassis, Park)
+                new RamseteCommand(chassis, Back),
+                new MoveClaw(claw, 0.5)
+
+
+
 
         );
 

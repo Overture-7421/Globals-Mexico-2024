@@ -38,13 +38,22 @@ public class EmergencyBlue extends LinearOpMode {
 
         Trajectory Forward = TrajectoryGenerator.generateTrajectory(Arrays.asList(
                         new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-                        new Pose2d(1.3, 0, Rotation2d.fromDegrees(0))),
-                new TrajectoryConfig(1, 0.5));
+                        new Pose2d(1.3, 0.25, Rotation2d.fromDegrees(40))),
+                new TrajectoryConfig(0.5, 0.2));
+
+        Trajectory reverse = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+                        new Pose2d(1.25, 0.25, Rotation2d.fromDegrees(60))),
+                new TrajectoryConfig(0.5, 0.2));
 
 
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
-                new MoveClaw(claw, 0.9),
-                new RamseteCommand(chassis, Forward)
+                new MoveDoubleArm(armo, -30,150),
+                new RamseteCommand(chassis, Forward),
+                new RamseteCommand(chassis, reverse)
+
+
+
         );
 
         waitForStart();

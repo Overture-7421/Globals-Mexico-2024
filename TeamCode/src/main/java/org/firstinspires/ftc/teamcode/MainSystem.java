@@ -64,8 +64,7 @@ public class MainSystem extends LinearOpMode {
         // -- CHASSIS MOVEMENT -- //
         chassis.setDefaultCommand(new MoveChassis(chassis,gamepad1));
 
-        Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
-        driverRightBumper.whileHeld(new MoveDoubleArm(armo, -70,150));
+
 
 
   // -----------------------------------------------------------------------------------------
@@ -74,26 +73,31 @@ public class MainSystem extends LinearOpMode {
 
 
         Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo, -70, 89.5)); //Down LISTOOOOOOOO
-
-        Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
-        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -40, 63)); //UP
-
-        Button driverLeftBumper= driverOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
-        driverLeftBumper.whenPressed(new MoveDoubleArm(armo, 90, 150)); //Cone
+        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo,  -75, 82)); //
 
         Button driverDpadUP= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
-        driverDpadUP.whenPressed(new MoveDoubleArm(armo,  -40, 85)); //Climb
+        driverDpadUP.whenPressed(new MoveDoubleArm(armo, 1,10)); //OverTHEPLATFORM
+
+        /*Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
+        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, ,0));*/
 
         Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
-        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -70,150)); //Close
+        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -75,160)); //Rest Position
+
+        //----------------------------------------------------//
+
+        Button driverLeftBumper= driverOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
+        driverLeftBumper.whenPressed(new MoveDoubleArm(armo,  -65, 65));
+
+        Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
+        driverRightBumper.whileHeld(new MoveDoubleArm(armo,  -55, 50));
 
 
 
            // -- FINGER MOVEMENT -- //
 
-        Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
-        driverButtonY.whenPressed(new MoveDoubleArm(armo, 90,85)); //Ready
+        /*Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
+        driverButtonY.whenPressed(new MoveDoubleArm(armo, -50,0)); */
 
         Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
         driverButtonX.whenPressed(new MoveClaw(claw, 0.9)); //OpenClaw
@@ -102,7 +106,7 @@ public class MainSystem extends LinearOpMode {
         driverButtonB.whenPressed(new MoveClaw(claw, 0.5));
 
         Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
-        driverButtonA.whenPressed(new MoveDoubleArm(armo, -30,75)); //Close, and rest position
+        driverButtonA.whenPressed(new MoveDoubleArm(armo, -30,150));
 
 
 
