@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Controllers.FRCProfiledPIDController;
@@ -11,6 +12,8 @@ import org.firstinspires.ftc.teamcode.Controllers.FRCTrapezoidProfile;
 public class DoubleArm extends SubsystemBase {
 
     private DcMotorEx lowerMotor;
+
+    private DcMotorEx lowerMotorTwo;
     private DcMotorEx upperMotor;
 
     private FRCProfiledPIDController lowerPID;
@@ -21,24 +24,28 @@ public class DoubleArm extends SubsystemBase {
     public static final double LOWER_GEAR_RATIO = 0.24;
     public static final double UPPER_GEAR_RATIO = 1;
 
-    private double lowerOffset = 78 ;
+    private double lowerOffset = 68 ;
 
-    private double upperOffset = -168;
+    private double upperOffset = -176;
 
     public DoubleArm(HardwareMap hardwareMap) {
         lowerMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor1");
+        //lowerMotorTwo = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor2");
         upperMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmoMotor3");
 
         lowerPID = new FRCProfiledPIDController(77, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 0.5));
         upperPID = new FRCProfiledPIDController(20, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 1.5));
 
         //lowerMotor.setDirection(DcMotorEx.Direction.REVERSE);
+        //ESTESIlowerMotorTwo.setDirection(DcMotorSimple.Direction.REVERSE);
         //upperMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         lowerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //lowerMotorTwo.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         upperMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         lowerMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //lowerMotorTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         upperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // resetZero();
@@ -84,6 +91,7 @@ public class DoubleArm extends SubsystemBase {
          double lowerOutput = lowerPID.calculate(getLowerPosition());
          double upperOutput = upperPID.calculate(getUpperPosition());
          lowerMotor.setPower(lowerOutput);
+         //lowerMotorTwo.setPower(lowerOutput);
          upperMotor.setPower(upperOutput);
     }
 }

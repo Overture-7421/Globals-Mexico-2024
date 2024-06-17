@@ -36,10 +36,12 @@ import org.firstinspires.ftc.teamcode.AutonomousCommands.GoDown;
 // Subsystems Import
 
 import org.firstinspires.ftc.teamcode.Commands.MoveShooter;
+import org.firstinspires.ftc.teamcode.Commands.MoveSingleArm;
 import org.firstinspires.ftc.teamcode.Subsystems.DoubleArm;
 import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 import org.firstinspires.ftc.teamcode.Subsystems.Chassis;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
+import org.firstinspires.ftc.teamcode.Subsystems.SingleArm;
 
 
 @TeleOp
@@ -53,8 +55,9 @@ public class MainSystem extends LinearOpMode {
 
         Chassis chassis         = new Chassis(hardwareMap);     // Create an instance of Chassis
         DoubleArm armo          = new DoubleArm(hardwareMap);         // Create an instance of Armo
-        Shooter Shoot_Servo   = new Shooter(hardwareMap);
-        Claw claw               = new Claw(hardwareMap);
+        //SingleArm singleArm     = new SingleArm(hardwareMap);
+        //Shooter Shoot_Servo   = new Shooter(hardwareMap);
+        //Claw claw               = new Claw(hardwareMap);
         GamepadEx driverOp      = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
 
 
@@ -72,16 +75,16 @@ public class MainSystem extends LinearOpMode {
         // -- ARM MOVEMENT (with PID)-- //
 
 
-        Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo,  -75, 82)); //
+       // Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
+        //driverDpadDOWN.whenPressed(new MoveSingleArm(singleArm, 50)); //
 
         Button driverDpadUP= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
-        driverDpadUP.whenPressed(new MoveDoubleArm(armo, 1,10)); //OverTHEPLATFORM
+        driverDpadUP.whenPressed(new MoveDoubleArm(armo, -68,10)); //OverTHEPLATFORM
 
-        /*Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
-        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, ,0));*/
+        Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
+        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -68,-10));
 
-        Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
+        /*Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
         driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -75,160)); //Rest Position
 
         //----------------------------------------------------//
@@ -90,14 +93,14 @@ public class MainSystem extends LinearOpMode {
         driverLeftBumper.whenPressed(new MoveDoubleArm(armo,  -65, 65));
 
         Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
-        driverRightBumper.whileHeld(new MoveDoubleArm(armo,  -55, 50));
+        driverRightBumper.whileHeld(new MoveDoubleArm(armo, -50, 0));
 
 
 
            // -- FINGER MOVEMENT -- //
 
         /*Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
-        driverButtonY.whenPressed(new MoveDoubleArm(armo, -50,0)); */
+        driverButtonY.whenPressed(new MoveDoubleArm(armo, -50,0));
 
         Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
         driverButtonX.whenPressed(new MoveClaw(claw, 0.9)); //OpenClaw
@@ -106,9 +109,9 @@ public class MainSystem extends LinearOpMode {
         driverButtonB.whenPressed(new MoveClaw(claw, 0.5));
 
         Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
-        driverButtonA.whenPressed(new MoveDoubleArm(armo, -30,150));
+        driverButtonA.whenPressed(new MoveDoubleArm(armo, -74,432));
 
-
+*/
 
 
         waitForStart();
@@ -125,8 +128,8 @@ public class MainSystem extends LinearOpMode {
             telemetry.addData("Heading", pose.getRotation().getDegrees());
             telemetry.addData("RightDistance", chassis.rightDistance());
             telemetry.addData("LeftDistance", chassis.leftDistance());
-            telemetry.addData("ServoLeft", claw.getLeftPosition());
-            telemetry.addData("ServoRight", claw.getRightPosition());
+            /*telemetry.addData("ServoLeft", claw.getLeftPosition());
+            telemetry.addData("ServoRight", claw.getRightPosition());*/
             telemetry.addData("UpperPosition", armo.getUpperPosition() * 360);
             telemetry.addData("LowerPosition", armo.getLowerPosition() * 360);
 

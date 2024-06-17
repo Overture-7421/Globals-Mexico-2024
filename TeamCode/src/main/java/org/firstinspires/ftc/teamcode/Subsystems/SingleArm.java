@@ -18,12 +18,12 @@ public class SingleArm extends SubsystemBase {
 
     public static final double MOTOR_GEAR_RATIO = 1;
 
-    private double motorOffset = 0.0;
+    private double motorOffset = -176;
 
     public SingleArm(HardwareMap hardwareMap) {
         motor = (DcMotorEx) hardwareMap.get(DcMotor.class, "ArmMotor");
 
-        armPID = new FRCProfiledPIDController(20, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 3));
+        armPID = new FRCProfiledPIDController(50, 0, 0.0, new FRCTrapezoidProfile.Constraints(2, 3));
 
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
