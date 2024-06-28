@@ -57,15 +57,15 @@ public class MainSystem extends LinearOpMode {
         DoubleArm armo          = new DoubleArm(hardwareMap);         // Create an instance of Armo
         //SingleArm singleArm     = new SingleArm(hardwareMap);
         //Shooter Shoot_Servo   = new Shooter(hardwareMap);
-        //Claw claw               = new Claw(hardwareMap);
+        Claw claw               = new Claw(hardwareMap);
         GamepadEx driverOp      = new GamepadEx(gamepad1);      // Create an instance of DriverGamepad
-
+        GamepadEx driver      = new GamepadEx(gamepad2);
 
 
 
 
         // -- CHASSIS MOVEMENT -- //
-        chassis.setDefaultCommand(new MoveChassis(chassis,gamepad1));
+        chassis.setDefaultCommand(new MoveChassis(chassis,gamepad2));
 
 
 
@@ -75,40 +75,40 @@ public class MainSystem extends LinearOpMode {
         // -- ARM MOVEMENT (with PID)-- //
 
 
-       // Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
-        //driverDpadDOWN.whenPressed(new MoveSingleArm(singleArm, 50)); //
+        Button driverDpadDOWN= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN);
+        driverDpadDOWN.whenPressed(new MoveDoubleArm(armo, -15,65));
 
         Button driverDpadUP= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP);
-        driverDpadUP.whenPressed(new MoveDoubleArm(armo, -68,10)); //OverTHEPLATFORM
+        driverDpadUP.whenPressed(new MoveDoubleArm(armo, 20,70)); //OverTHEPLATFORM
 
         Button driverDpadLeft= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT);
-        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -68,-10));
+        driverDpadLeft.whenPressed(new MoveDoubleArm(armo, -65,71));
 
-        /*Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
-        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -75,160)); //Rest Position
+        Button driverDpadRIGHT= driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT);
+        driverDpadRIGHT.whenPressed(new MoveDoubleArm(armo, -65,170)); //Rest Position
 
         //----------------------------------------------------//
 
-        Button driverLeftBumper= driverOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
+        /*Button driverLeftBumper= driverOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER);
         driverLeftBumper.whenPressed(new MoveDoubleArm(armo,  -65, 65));
 
         Button driverRightBumper= driverOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER);
-        driverRightBumper.whileHeld(new MoveDoubleArm(armo, -50, 0));
+        driverRightBumper.whileHeld(new MoveDoubleArm(armo, -50, 0));*/
 
 
 
            // -- FINGER MOVEMENT -- //
 
-        /*Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
-        driverButtonY.whenPressed(new MoveDoubleArm(armo, -50,0));
+        //Button driverButtonY= driverOp.getGamepadButton(GamepadKeys.Button.Y);
+        //driverButtonY.whenPressed(new MoveDoubleArm(armo, -50,0));
 
         Button driverButtonX= driverOp.getGamepadButton(GamepadKeys.Button.X);
-        driverButtonX.whenPressed(new MoveClaw(claw, 0.9)); //OpenClaw
+        driverButtonX.whenPressed(new MoveClaw(claw, 0.2)); //OpenClaw
 
         Button driverButtonB= driverOp.getGamepadButton(GamepadKeys.Button.B);
         driverButtonB.whenPressed(new MoveClaw(claw, 0.5));
 
-        Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
+       /* Button driverButtonA= driverOp.getGamepadButton(GamepadKeys.Button.A);
         driverButtonA.whenPressed(new MoveDoubleArm(armo, -74,432));
 
 */

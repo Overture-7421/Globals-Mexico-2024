@@ -24,11 +24,11 @@ import org.firstinspires.ftc.teamcode.Subsystems.Claw;
 import java.util.Arrays;
 
 @Autonomous
-public class REVERSETRYOUTS extends LinearOpMode {
+public class Vanesautonomous extends LinearOpMode {
     Chassis chassis;
     Claw claw;
 
-    //creo que vuela
+    //creo que no vuela todavia
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -39,40 +39,54 @@ public class REVERSETRYOUTS extends LinearOpMode {
         claw = new Claw(hardwareMap);
 
 
-        TrajectoryConfig redWETopConfig = new TrajectoryConfig(0.5, 0.2);
+        TrajectoryConfig redWETopConfig = new TrajectoryConfig(1, 0.2);
         redWETopConfig.setReversed(false);
         Trajectory UP = TrajectoryGenerator.generateTrajectory(Arrays.asList(
                 new Pose2d(0,0,Rotation2d.fromDegrees(0)),
-                new Pose2d(2.6,0,Rotation2d.fromDegrees(0))), redWETopConfig
+                new Pose2d(2,0,Rotation2d.fromDegrees(0))), redWETopConfig
         );
 
         TrajectoryConfig AVANCE = new TrajectoryConfig(0.5, 0.2);
-        AVANCE.setReversed(false);
-        Trajectory Left = TrajectoryGenerator.generateTrajectory(Arrays.asList(
-                new Pose2d(2.6,0,Rotation2d.fromDegrees(90)),
-                new Pose2d(2.6,1.5,Rotation2d.fromDegrees(90))), redWETopConfig
-        );
+        AVANCE.setReversed(true);
+        Trajectory down = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                new Pose2d(2,0,Rotation2d.fromDegrees(0)),
+                new Pose2d(1.5,0,Rotation2d.fromDegrees(0))), AVANCE);
 
         TrajectoryConfig GoPark = new TrajectoryConfig(0.5, 0.2);
-        GoPark.setReversed(true);
-        Trajectory Reverse = TrajectoryGenerator.generateTrajectory(Arrays.asList(
-                new Pose2d(2.6,1.5, Rotation2d.fromDegrees(90)),
-                new Pose2d(2.6,0.1, Rotation2d.fromDegrees(90))), GoPark);
+        GoPark.setReversed(false);
+        Trajectory left = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                new Pose2d(1.5,0, Rotation2d.fromDegrees(90)),
+                new Pose2d(1.5,0.7, Rotation2d.fromDegrees(90))), GoPark);
 
         TrajectoryConfig Push = new TrajectoryConfig(0.5, 0.2);
         Push.setReversed(false);
         Trajectory Forward = TrajectoryGenerator.generateTrajectory(Arrays.asList(
-                new Pose2d(2.6,0.1, Rotation2d.fromDegrees(90)),
-                new Pose2d(2.6,1.5, Rotation2d.fromDegrees(90))), Push);
+                new Pose2d(1.5,0.7, Rotation2d.fromDegrees(-90)),
+                new Pose2d(1.5,-0.6, Rotation2d.fromDegrees(-90))), Push);
+
+        TrajectoryConfig lol = new TrajectoryConfig(0.5, 0.2);
+        Push.setReversed(true);
+        Trajectory hola = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                new Pose2d(1.5,-0.6, Rotation2d.fromDegrees(180)),
+                new Pose2d(1.5,0, Rotation2d.fromDegrees(180))), lol);
+
+        TrajectoryConfig xd = new TrajectoryConfig(0.5, 0.2);
+        Push.setReversed(false);
+        Trajectory bye = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                new Pose2d(1.5,0, Rotation2d.fromDegrees(180)),
+                new Pose2d(0.5,0, Rotation2d.fromDegrees(180))), xd);
 
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
                 new RamseteCommand(chassis, UP),
+                new RamseteCommand(chassis, down),
                 new TurnToAngle(chassis, Rotation2d.fromDegrees(90)),
-                new RamseteCommand(chassis, Left),
-                new WaitCommand(1000),
-                new RamseteCommand(chassis, Reverse),
-                new WaitCommand(1000),
-                new RamseteCommand(chassis, Forward)
+                new RamseteCommand(chassis, left),
+                new TurnToAngle(chassis, Rotation2d.fromDegrees(-90)),
+                new RamseteCommand(chassis, Forward),
+                new TurnToAngle(chassis, Rotation2d.fromDegrees(180)),
+                new RamseteCommand(chassis, hola),
+                new RamseteCommand(chassis, bye)
+
         );
 
         waitForStart();
