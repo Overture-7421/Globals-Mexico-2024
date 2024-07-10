@@ -49,8 +49,20 @@ public class Chassis extends SubsystemBase {
     */
 
     /* -- MOTOR DECLARATION --*/
+
+    //Ex. private DcMotorEx rightDrive;
+
     /* -- CHASSIS CONSTANTS --*/
+   /* private final double M_PER_TICK = ;
+      static final double TRACKWIDTH = ;
+      static final double GEAR_REDUCTION =;
+    */
+
+
     /* -- DIFFERENTAL DRIVE ODOMETRY DECLARATION*/
+
+    //private DifferentialDriveOdometry diff0dm;
+
         /*
         DDO es una clase para odometría de accionamiento diferencial. La odometría te permite
         rastrear la posición del robot en el campo durante el transcurso de un partido utilizando
@@ -75,13 +87,21 @@ public class Chassis extends SubsystemBase {
     */
     public Chassis(HardwareMap hardwareMap){
         /* -- MOTOR ID -- */
+
+        //Ex. rightDrive = (DcMotorEx) hardware.get(DcMotor.class, deviceName: "right_Drive");
+
         /* -- MOTOR DIRECTION -- */
         /* -- ODOMETRY INITIALIZATION -- */
-        /* -- IMU PARAMETERS -- */
-            /*
-            La declaración del IMU depende mucho de la orientación del ControlHub en el robot. Además, se
+
+       // diffOdom = new DifferentialDriveOdometry(new Rotation2s());
+       // imu = hardwareMap.get(IMU.class, "imu");
+
+        /* -- IMU PARAMETERS --
+
+      La declaración del IMU depende mucho de la orientación del ControlHub en el robot. Además, se
             tiene que dar su ubicación en el HardwareMap. Y finalmente se resetea la dirección del mismo.
-            */
+
+
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters imuParameters = new IMU.Parameters(
                 new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -89,13 +109,48 @@ public class Chassis extends SubsystemBase {
         );
         imu.initialize(imuParameters);
         imu.resetYaw();
-    }
+    }*/
 
     /* -- SET SPEED -- */
-    /* -- GET RIGHT DISTANCE (POSITION) -- */
-    /* -- GET LEFT DISTANCE (POSITION) -- */
-    /* -- POSE2D RESET-- */
-    /* -- GET POSE (DIFFODOM) -- */
+
+       /* public void setSpeed(double linearSpeed, double angularSpeed){
+            rightDrive.setPower(linearSpeed - angularSpeed) / 2;
+            leftDrive.setPower(linearSpeed + angularSpeed) / 2;
+        }
+*/
+
+        /* -- GET RIGHT DISTANCE (POSITION) --
+
+        public double rightDistance(){
+            return ((rightDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
+        }
+        */
+
+    /* -- GET LEFT DISTANCE (POSITION) --
+
+        public double leftDistance(){
+            return ((leftDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
+        }
+        */
+
+    /* -- POSE2D RESET--
+
+    public void resetPose(Pose2d pose) {
+        leftOffset = leftDrive.getCurrentPosition();
+        rightOffset = rightDrive.getCurrentPosition();
+        diffOdom.resetPosition(pose, getIMUHeading());
+    }
+
+     */
+
+
+
+    /* -- GET POSE (DIFFODOM) --
+
+        public Pose2d getPose() {
+            return diffOdom.getPoseMeters();
+        }
+     */
 
     @Override
     /* -- PERIODICALLY UPDATE DIFFODOM, IMUHEADING, LEFTDISTANCE & RIGHTDISTANCE -- */

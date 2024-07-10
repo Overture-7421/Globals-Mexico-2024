@@ -43,6 +43,8 @@ public class Claw extends SubsystemBase {
     */
 
     /* -- MOTOR DECLARATION -- */
+   // private ServoEx rightServo;
+
 
     /*
     Está función permite al programa asignar y dar sentido al Hardware y donde está ubicado en los IDs del
@@ -52,7 +54,10 @@ public class Claw extends SubsystemBase {
 
     public Claw (HardwareMap hardwareMap) {
         /* -- SERVO IDs --*/
+       // rightServo = new SimpleServo(hardwareMap, "grab_RightServo", 0, 180);
+
         /* -- MOTOR DIRECTION -- */
+        //leftServo.setInverted(true);
     }
 
     /* -- GET RIGHT POSITION -- */
