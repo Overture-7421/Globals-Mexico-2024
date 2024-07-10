@@ -43,7 +43,6 @@ public class Claw extends SubsystemBase {
     */
 
     /* -- MOTOR DECLARATION -- */
-
     /*
     Está función permite al programa asignar y dar sentido al Hardware y donde está ubicado en los IDs del
     ControlHub los motores de cada Subsistema. Además, daremos información al Hardware sobre su comportamiento,
