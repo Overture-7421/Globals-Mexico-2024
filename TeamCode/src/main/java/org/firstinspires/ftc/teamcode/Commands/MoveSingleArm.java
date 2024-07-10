@@ -24,26 +24,67 @@ Finalmente damos el nombre del archivo especifico dentro de la librería.
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.Subsystems.SingleArm;
+/*
+Java funciona principalmente a base de Clases; estas clases a parte de ser un archivo
+dentro del programa del robot, es una estructura de Programación Orientada a Objetos
+donde podemos declarar, en este caso, motores, sensores, variables y constantes que
+ayuden a la correcta ejecución del prorgama. A continuación se muestra la correcta
+forma de iniciar una clase de nombre "MoveSingleArm"; debemos de agregar "extends CommandBase"
+puesto que es un comando ya que nos permiten añadir las opciones, funciones y herramientas
+de los comandos.
+*/
 
 public class MoveSingleArm extends CommandBase {
 
-    private final SingleArm singleArm;
+    /* El siguiente paso para la realización de los comandos, es declarar las variables y las
+    constantes necesarias para la realización del comando. Estas ya que sólo serán usadas en el comando
+    suelen ser "private final" es decir que se usa exclusivamente en esta clase.
 
-    private final double targetPosition;
+    Ej. private final SingleArm singleArm;
+     */
 
-    public MoveSingleArm(SingleArm subsystem, double targetPosition) {
-        this.singleArm = subsystem;
-        this.targetPosition = targetPosition / 360;
-        addRequirements(singleArm);
+
+ /* Declaración de constantes o Variables*/
+
+
+    /* Posteriormente se tiene que crear el "Constructor" del comando. Un constructor
+     inicializa y configura un objeto de comando con parámetros específicos para controlar el comportamiento
+     del robot. Es importante recordar que un comando puede que ser llamado desde un OpMode o un Autónomo, es
+     por eso que debe ser "public", esto lo hace accesible desde otras partes dentro del código.
+
+     Ej. public MoveShooter(Shooter subsystem, double Voltage) {
+     */
+
+    /* Junto a este paso también es relevante especificarle al sistema que no confunda los objetos con los
+    requerimientos del constructor, es por eso que agregamos "this." a las constantes, para especificar que
+    lo que queremos afectar es al objeto.
+
+    Ej. this.shooter = subsystem
+        this.voltage = voltage
+     */
+
+    /* Al final tenemos que agregar "addRequirements" y al subsistema que queremos que se vea afectado para
+    que los cambios se vean afectados.
+
+    Ej. addRequirements(Shooter);
+     */
+
     }
 
     @Override
     public void initialize() {
         singleArm.setTarget(targetPosition);
+         /* El método initialize nos indica que es lo que va a ocurrir una vez sea llamado el comando
+    en este caso en específico, queremos que vaya hacia la dirección que nosotros le indiquemos
+    desde el constructor del comando.
+     */
     }
 
     @Override
     public boolean isFinished() {
+     /* Para terminar tenemos que usar el método "isFinished", siendo este el opuesto de initialize, nos indica
+        que es lo que va a ocurrir una vez el comando haya sido finalizado o haya concluido con el movimiento.
+         */
         double currentPosition = singleArm.getPosition();
         return Math.abs(targetPosition - currentPosition) < 0.05;
     }
