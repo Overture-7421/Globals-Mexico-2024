@@ -53,7 +53,7 @@ public class AutonomousEx extends LinearOpMode {
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
                 new RamseteCommand(chassis, UP),
                 new TurnToAngle(chassis, Rotation2d.fromDegrees(90)),
-                new MoveSinglearm(singleArm, 30),
+                //new MoveSinglearm(singleArm, 30),
                 new RamseteCommand(chassis, Right)
         );
 
