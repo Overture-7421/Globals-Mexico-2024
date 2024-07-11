@@ -50,7 +50,7 @@ public class Chassis extends SubsystemBase {
 
     /* -- MOTOR DECLARATION --*/
 
-    //Ex. private DcMotorEx rightDrive;
+
 
     /* -- CHASSIS CONSTANTS --*/
    /* private final double M_PER_TICK = ;

@@ -43,9 +43,18 @@ public class AutonomousEx extends LinearOpMode {
         );
 
 
+        TrajectoryConfig hola = new TrajectoryConfig(0.5, 0.2);
+        hola.setReversed(false);
+        Trajectory Right = TrajectoryGenerator.generateTrajectory(Arrays.asList(
+                new Pose2d(2.6,0,Rotation2d.fromDegrees(90)),
+                new Pose2d(2.6,1,Rotation2d.fromDegrees(90))), hola
+        );
+
         SequentialCommandGroup testCommandGroup = new SequentialCommandGroup(
                 new RamseteCommand(chassis, UP),
-                new TurnToAngle(chassis, Rotation2d.fromDegrees(90))
+                new TurnToAngle(chassis, Rotation2d.fromDegrees(90)),
+                new MoveSinglearm(singleArm, 30),
+                new RamseteCommand(chassis, Right)
         );
 
         waitForStart();
