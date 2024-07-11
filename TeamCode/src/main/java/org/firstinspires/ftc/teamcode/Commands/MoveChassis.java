@@ -40,6 +40,14 @@ de los comandos.
 
 public class MoveChassis extends CommandBase {
 
+    private final  Chassis chassis;
+    private final Gamepad driverGamepad;
+
+    public MoveChassis(Chassis subsystem,Gamepad driverGamepad){
+        this.driverGamepad = driverGamepad;
+        chassis = subsystem;
+        addRequirements(subsystem);
+    }
           /*El siguiente paso para la realización de los comandos, es declarar las variables y las
     constantes necesarias para la realización del comando. Estas ya que sólo serán usadas en el comando
     suelen ser "private final" es decir que se usa exclusivamente en esta clase.

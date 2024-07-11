@@ -5,20 +5,6 @@ la carpeta de "Subsystems". Nota como existe una diferencia entre "package" e "i
 */
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-/*
-Es importante que para que tu subsistema funcione importes todas las librerías necesarias
-que vayan a ayudar a la ejecución del subsistema o comando. Java y OnBotJava te irá
-avisando cuando necesites importar algo, puesto que te indicará que falta una "librería".
-En este primer ejemplo para el desarrollo del subsistema del chassis te daremos las
-librerías necesarias para la ejecución. Nota como tiene una estructura:
-
-import -> indica que vas a importar una librería.
-com.arcrobotics.ftclib.command
-                      .geometry -> indica la ubicación de la librería.
-                      .kinematics
-Finalmente damos el nombre del archivo especifico dentro de la librería.
-*/
-
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.arcrobotics.ftclib.geometry.Rotation2d;
@@ -26,20 +12,11 @@ import com.arcrobotics.ftclib.kinematics.wpilibkinematics.DifferentialDriveOdome
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-
-/*
-Java funciona principalmente a base de Clases; estas clases a parte de ser un archivo
-dentro del programa del robot, es una estructura de Programación Orientada a Objetos
-donde podemos declarar, en este caso, motores, sensores, variables y constantes que
-ayuden a la correcta ejecución del prorgama. A continuación se muestra la correcta
-forma de iniciar una clase de nombre "Chassis"; debemos de agregar "extends SubsystemBase"
-puesto que es un subsystema ya que nos permiten añadir las opciones, funciones y herramientas
-de los subsistemas.
-*/
 
 public class Chassis extends SubsystemBase {
     /*
@@ -49,19 +26,20 @@ public class Chassis extends SubsystemBase {
     */
 
     /* -- MOTOR DECLARATION --*/
-
+    private DcMotorEx leftDrive;
+    private DcMotorEx rightDrive;
     //Ex. private DcMotorEx rightDrive;
 
     /* -- CHASSIS CONSTANTS --*/
-    /* private final double M_PER_TICK = 288;
-       static final double TRACKWIDTH = ;
-       static final double GEAR_REDUCTION = ;
-     */
+    private final double M_PER_TICK = 288;
+    static final double TRACKWIDTH = 0.0891286;
+    static final double GEAR_REDUCTION = 12;
+
 
 
     /* -- DIFFERENTAL DRIVE ODOMETRY DECLARATION*/
 
-    // private DifferentialDriveOdometry diffOdm;
+     private DifferentialDriveOdometry diffOdom;
 
         /*
         DDO es una clase para odometría de accionamiento diferencial. La odometría te permite
@@ -79,6 +57,9 @@ public class Chassis extends SubsystemBase {
         la aceleración, orientación, velocidades angulares y otras fuerzas gravitacionales de un objeto.
         Los offsets son constantes que operan en cada motor y encoder que permiten resetear los mismos a 0.
         */
+        private IMU imu;
+        private int leftOffset = 0, rightOffset = 0;
+
 
     /*
     Está función permite al programa asignar y dar sentido al Hardware y donde está ubicado en los IDs del
@@ -86,51 +67,55 @@ public class Chassis extends SubsystemBase {
     como orientación o inicialización de la odometría y el IMU.
     */
     public Chassis(HardwareMap hardwareMap){
+
         /* -- MOTOR ID -- */
+        leftDrive = (DcMotorEx) hardwareMap.get(DcMotor.class,"left_Drive" );
+        rightDrive = (DcMotorEx) hardwareMap.get(DcMotor.class,"right_Drive");
 
         // Ex. rightDrive = (DcMotorEx) hardware.get(DcMotor.class, deviceName);
 
         /* -- MOTOR DIRECTION -- */
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         /* -- ODOMETRY INITIALIZATION -- */
 
-        // diffOdom = new DifferentialDriveOdometry(new Rotation2s());
-        // imu = hardwareMap.get(IMU.class, "imu");
+        diffOdom = new DifferentialDriveOdometry(new Rotation2d());
+        imu = hardwareMap.get(IMU.class, "imu");
 
         /* -- IMU PARAMETERS --
 
             La declaración del IMU depende mucho de la orientación del ControlHub en el robot. Además, se
-            tiene que dar su ubicación en el HardwareMap. Y finalmente se resetea la dirección del mismo.
+            tiene que dar su ubicación en el HardwareMap. Y finalmente se resetea la dirección del mismo.*/
 
-        imu = hardwareMap.get(IMU.class, "imu");
+
         IMU.Parameters imuParameters = new IMU.Parameters(
                 new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                        RevHubOrientationOnRobot.UsbFacingDirection.FORDWARD)
+                        RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)
         );
         imu.initialize(imuParameters);
         imu.resetYaw();
-    }*/
+    }
 
     /* -- SET SPEED -- */
-        /* public void setSpeed(double linearSpeed, double angularSpeed){
-        rightDrive.setPower(linearSpeed - angularSpeed) / 2;
-        leftDrive.setPower(linearSpeed + angularSpeed) / 2;
-        }
-*/
-    /* -- GET RIGHT DISTANCE (POSITION) --
+    public void setSpeed(double linearSpeed, double angularSpeed) {
+        rightDrive.setPower((linearSpeed - angularSpeed) / 2);
+        leftDrive.setPower((linearSpeed + angularSpeed) / 2);
+    }
+    /* -- GET RIGHT DISTANCE (POSITION) --*/
 
     public double rightDistance(){
         return ((rightDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
        }
-     */
 
-    /* -- GET LEFT DISTANCE (POSITION) --
 
-        public double leftDistance(){
-            return ((leftDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math:PI) / GEAR_REDUCTION;
+    /* -- GET LEFT DISTANCE (POSITION) --*/
+
+    public double leftDistance(){
+            return ((leftDrive.getCurrentPosition() / M_PER_TICK) * TRACKWIDTH * Math.PI) / GEAR_REDUCTION;
         }
-     */
 
-    /* -- POSE2D RESET--
+
+    /* -- POSE2D RESET--*/
 
     public void resetPose(Pose2d pose){
         leftOffset = leftDrive.getCurrentPosition();
@@ -138,16 +123,19 @@ public class Chassis extends SubsystemBase {
         diffOdom.resetPosition(pose, getIMUHeading());
      }
 
-     */
-    /* -- GET POSE (DIFFODOM) --
 
-        public Pose2d getPose() {
+    /* -- GET POSE (DIFFODOM) --*/
+
+    public Pose2d getPose() {
             return diffOdom.getPoseMeters();
         }
-     */
+
 
     @Override
     /* -- PERIODICALLY UPDATE DIFFODOM, IMUHEADING, LEFTDISTANCE & RIGHTDISTANCE -- */
+    public void periodic() {
+        diffOdom.update(getIMUHeading(), leftDistance(), rightDistance());
+    }
 
     private Rotation2d getIMUHeading(){
         YawPitchRollAngles robotOrientation;
