@@ -25,16 +25,16 @@ public class SingleArm extends SubsystemBase {
     public static final double MOTOR_GEAR_RATIO = 1;
 
     /* -- MOTOR OFFSET -- */
-    private double motorOffset = 40;
+    private double motorOffset = 35;
 
 
     public SingleArm(HardwareMap hardwareMap) {
         /* -- MOTOR ID -- */
-        leftMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "leftmotor");
-        rightMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "rightmotor");
+        leftMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "leftMotor");
+        rightMotor = (DcMotorEx) hardwareMap.get(DcMotor.class, "rightMotor");
 
         /* -- PID CONSTRUCTOR -- */
-        armPID = new FRCProfiledPIDController(0.0, 0.0, 0.0, new FRCTrapezoidProfile.Constraints(0, 0));
+        armPID = new FRCProfiledPIDController(0.0, 0.0, 0.0, new FRCTrapezoidProfile.Constraints(3, 2));
 
         /* -- SET MOTOR MODE AND ZERO POWER BEHAVIOR -- */
         rightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER); /* Esta configuración nos indica que el motor
